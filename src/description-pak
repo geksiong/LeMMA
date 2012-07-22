@@ -1,0 +1,3 @@
+LeMMA - a GUI frontend for creating MMA files
+.
+Note that this is NOT really an MMA editor, but rather a simple front-end to generate simple MMA files. I wrote this program so that I can churn out and play chord progressions easily.
