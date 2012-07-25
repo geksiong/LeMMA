@@ -182,7 +182,7 @@ class Application(Frame):
 		self.tempoEntry = Spinbox(self.infoFrame, width=4, from_="0", to="400", increment=1)
 		#self.tempoEntry = Entry(self.infoFrame, width=4)
 		self.tempoEntry.delete(0, END)
-		self.tempoEntry.insert(0,"60")
+		self.tempoEntry.insert(0,"120")
 		self.tempoEntry.grid(row=0, column=6, sticky=W)
 		self.tempoTip = ToolTip(self.infoFrame, attachto=self.tempoEntry, text="Tempo in beats/minute")
 		
