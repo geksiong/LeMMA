@@ -306,7 +306,8 @@ class SettingsDialog(SimpleDialogExt):
 		mmaversion = 1.2
 		versionstr = ""
 		try:
-			cmd = pythonPath + " " + mmaPath + " -v"
+			#	quote pythonPath to handle correctly space characters in it
+			cmd = "\"" + pythonPath + "\" " + mmaPath + " -v"
 			#pipe = os.popen(cmd, 'r')
 			pipe = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE).stdout
 			output = pipe.read()
@@ -348,10 +349,11 @@ class SettingsDialog(SimpleDialogExt):
 					# run MMA command
 					try:
 						# NOTE: In Windows, I need a shell window for this to work!
+						#	quote pythonPath to handle correctly space characters in it
 						if mmaversion > 1.0:
-							cmd = pythonPath + " " + mmaPath + " -Dxl -w " + filename
+							cmd = "\"" + pythonPath + "\" " + mmaPath + " -Dxl -w " + filename
 						else:
-							cmd = pythonPath + " " + mmaPath + " -Dx -w " + filename
+							cmd = "\"" + pythonPath + "\" " + mmaPath + " -Dx -w " + filename
 						pipe = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE).stdout
 						logging.debug("[addGrooves] Calling subprocess '" + cmd + "'")
 						#pipe = os.popen(cmd, 'r')

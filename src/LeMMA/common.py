@@ -228,7 +228,8 @@ def playMMA():
 		logging.debug("[playMMA] No temp midi to delete.")
 
 	# Generate the midi file
-	cmd = os.path.normcase(pythonPath + " " + mmaPath + " \"" + currentdir + "/_temp_.mma\"")
+	#	quote pythonPath to handle correctly space characters in it
+	cmd = os.path.normcase("\"" + pythonPath + "\" " + mmaPath + " \"" + currentdir + "/_temp_.mma\"")
 	logging.debug("[playMMA] Calling process '" + cmd + "'")
 	pipe = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE).stdout
 	output = pipe.read()
