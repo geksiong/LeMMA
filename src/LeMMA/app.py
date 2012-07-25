@@ -120,7 +120,8 @@ class Application(Frame):
 			('File', 0, '', (
 				('New', 0, 'Ctrl+N', self.newFile),
 				('Open', 0, 'Ctrl+O', self.loadMMA),
-				('Save', 0, 'Ctrl+S', self.saveAsMMA),
+				('Save', 0, 'Ctrl+S', self.saveMMA),
+				('Save as ...', 0, '', self.saveAsMMA),
 				('Quit', 0, '', self.quit),
 				)),
 			('MMA', 0, '', (
@@ -144,7 +145,7 @@ class Application(Frame):
 		self.Toolbar = createToolbar(self, os.path.abspath(self.modulePath+"/LeMMA/images"),
 			(('file-new', 'New MMA file', self.newFile),
 			('file-open', 'Open MMA file', self.loadMMA),
-			('file-save', 'Save MMA file', self.saveAsMMA),
+			('file-save', 'Save MMA file', self.saveMMA),
 			('file-preview', 'Preview MMA file', self.viewMMA),
 			('', '', None),
 			('play', 'Play MIDI', self.playFile),
@@ -552,11 +553,11 @@ class Application(Frame):
 		common.printOutput("Loaded " + self.currentFile)
 
 	def viewMMA(self, event=None):
-		self.saveMMA("_temp_.mma")
+		self.doSaveMMA("_temp_.mma")
 		common.ViewFileDialog(self, title="View MMA", filename="_temp_.mma", linenumbers=True)
 	
 	def playFile(self, event=None):
-		self.saveMMA("_temp_.mma")
+		self.doSaveMMA("_temp_.mma")
 		common.playMMA()
 
 	def pausePlayback(self, event=None):
@@ -565,17 +566,28 @@ class Application(Frame):
 	def stopPlayback(self, event=None):
 		common.stop_playMMA()
 		
+	def saveMMA(self, event=None):
+		# KeRi: if we have aready a filename save it as that
+		if self.currentFile == "" or self.currentFile == ():	#	KeRi
+			self.askAndSaveMMA()
+		else:													#	KeRi
+			self.doSaveMMA(self.currentFile)					#	KeRi
+			common.printOutput("Saved " + self.currentFile)		#	KeRi
+			return												#	KeRi
+		
 	def saveAsMMA(self, event=None):
+		self.askAndSaveMMA()
+	def askAndSaveMMA(self):
 		temp = tkFileDialog.asksaveasfilename(filetypes = MMA_filetypes)
 		if temp != "" and temp != ():
 			self.currentFile = temp
 			self.updateTitle()
-			self.saveMMA(self.currentFile)
-			common.printOutput("Saved " + self.currentFile)
+			self.doSaveMMA(self.currentFile)
+			common.printOutput("Saved as " + self.currentFile)
 			return
 		common.printOutput("Save cancelled")
 		
-	def saveMMA(self, filename):
+	def doSaveMMA(self, filename):
 		currentLibPath = common.libDir
 		currentAutoLibPath = "stdlib"
 
