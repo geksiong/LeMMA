@@ -683,7 +683,11 @@ class Application(Frame):
 
 				break	# stops at first empty measure, ignoring any other non-empty measures after it
 			i = i+1
-			
+
+		# need to consider a song ending in a repeat: must check beyond last bar
+		if self.barlines[i]["text"] == ":| ":
+			print >>f, "RepeatEnd"
+
 		print >>f, "cut -1"
 		f.close()
 
