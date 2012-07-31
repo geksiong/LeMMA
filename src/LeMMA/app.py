@@ -491,7 +491,7 @@ class Application(Frame):
 				contents = ""
 				matched = True
 				# Is this a repeatend + repeat?
-				if self.barlines[measure].configure(text=":| "):
+				if self.barlines[measure]["text"] == ":| ":
 					self.barlines[measure].configure(text=":|:")
 				else:
 					self.barlines[measure].configure(text=" |:")
