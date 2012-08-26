@@ -68,24 +68,24 @@ class SettingsDialog(SimpleDialogExt):
 		Label(master, text="Python path ", anchor=W).grid(row=0, column=0, sticky=W)
 		self.pythonPathEntry = Entry(master, width=20, font=autoScaleFont(FONTS["Text"]))
 		self.pythonPathEntry.insert(1, common.pythonPath)
-		self.pythonPathEntry.grid(row=0, column=1, sticky=E+W)
+		self.pythonPathEntry.grid(row=0, column=1, columnspan=3, sticky=E+W)
 		self.browse_icon = default_icons.getIcon("folder-open")
 		self.pythonPathBrowseBtn = Button(master, image=self.browse_icon, text="Browse", command=self.pythonPathBrowse)
-		self.pythonPathBrowseBtn.grid(row=0, column=2, sticky=NW)
+		self.pythonPathBrowseBtn.grid(row=0, column=4, sticky=NW)
 		
 		Label(master, text="MMA path ", anchor=W).grid(row=1, column=0, sticky=W)
 		self.mmaPathEntry = Entry(master, width=20, font=autoScaleFont(FONTS["Text"]))
 		self.mmaPathEntry.insert(1, common.mmaPath)
-		self.mmaPathEntry.grid(row=1, column=1, sticky=E+W)
+		self.mmaPathEntry.grid(row=1, column=1, columnspan=3, sticky=E+W)
 		self.mmaPathBrowseBtn = Button(master, image=self.browse_icon, text="Browse", command=self.mmaPathBrowse)
-		self.mmaPathBrowseBtn.grid(row=1, column=2, sticky=NW)
+		self.mmaPathBrowseBtn.grid(row=1, column=4, sticky=NW)
 
 		Label(master, text="MMA grooves path ", anchor=W).grid(row=2, column=0, sticky=W)
 		self.mmaLibDirEntry = Entry(master, width=20, font=autoScaleFont(FONTS["Text"]))
 		self.mmaLibDirEntry.insert(1, common.libDir)
-		self.mmaLibDirEntry.grid(row=2, column=1, sticky=E+W)
+		self.mmaLibDirEntry.grid(row=2, column=1, columnspan=3, sticky=E+W)
 		self.mmaLibDirBrowseBtn = Button(master, image=self.browse_icon, text="Browse", command=self.mmaLibDirBrowse)
-		self.mmaLibDirBrowseBtn.grid(row=2, column=2, sticky=NW)
+		self.mmaLibDirBrowseBtn.grid(row=2, column=4, sticky=NW)
 
 		Label(master, text="Midi engine ", anchor=W).grid(row=3, column=0, sticky=W)
 		self.midiEngineButton = Button(master, text=common.midiEngine, pady=0)
@@ -97,16 +97,16 @@ class SettingsDialog(SimpleDialogExt):
 		Label(master, text="External midi player ", anchor=W).grid(row=4, column=0, sticky=W)
 		self.midiPlayerEntry = Entry(master, width=20, font=autoScaleFont(FONTS["Text"]))
 		self.midiPlayerEntry.insert(1, common.midiPlayer)
-		self.midiPlayerEntry.grid(row=4, column=1, sticky=E+W)
+		self.midiPlayerEntry.grid(row=4, column=1, columnspan=3, sticky=E+W)
 		self.midiPlayerBrowseBtn = Button(master, image=self.browse_icon, text="Browse", command=self.midiPlayerBrowse)
-		self.midiPlayerBrowseBtn.grid(row=4, column=2, sticky=NW)
+		self.midiPlayerBrowseBtn.grid(row=4, column=4, sticky=NW)
 
 		Label(master, text="(Optional) Custom \ngroove folder ", anchor=W, justify=LEFT).grid(row=5, column=0, sticky=W)
 		self.customGroovePathEntry = Entry(master, width=20, font=autoScaleFont(FONTS["Text"]))
 		self.customGroovePathEntry.insert(1, common.customGroovePath)
-		self.customGroovePathEntry.grid(row=5, column=1, sticky=E+W)
+		self.customGroovePathEntry.grid(row=5, column=1, columnspan=3, sticky=E+W)
 		self.customGroovePathBrowseBtn = Button(master, image=self.browse_icon, text="Browse", command=self.customGrooveBrowse)
-		self.customGroovePathBrowseBtn.grid(row=5, column=2, sticky=NW)
+		self.customGroovePathBrowseBtn.grid(row=5, column=4, sticky=NW)
 
 		Label(master, text="Measures per row \n(on startup) ", anchor=W, justify=LEFT).grid(row=6, column=0, sticky=W)
 		self.measuresPerRowEntry = Entry(master, width=3, font=autoScaleFont(FONTS["Text"]))
@@ -116,13 +116,13 @@ class SettingsDialog(SimpleDialogExt):
 		Label(master, text="").grid(row=7, column=0)
 
 		self.autoDetectBtn = Button(master, text="Auto-detect paths", command=self.autoDetectPaths)
-		self.autoDetectBtn.grid(row=8, column=0, sticky=E+W)
+		self.autoDetectBtn.grid(row=8, column=1, padx=7, sticky=E+W)
 
 		self.mmaPathRefreshBtn = Button(master, text="Refresh grooves library", command=self.refreshGrooves)
-		self.mmaPathRefreshBtn.grid(row=8, column=1, sticky=E+W)
+		self.mmaPathRefreshBtn.grid(row=8, column=2, padx=7, sticky=E+W)
 
 		self.configFontsBtn = Button(master, text="Configure fonts", command=self.configFonts)
-		self.configFontsBtn.grid(row=8, column=2, sticky=E+W)
+		self.configFontsBtn.grid(row=8, column=3, padx=7, sticky=E+W)
 
 		return self.mmaPathEntry	# initial focus
 	
