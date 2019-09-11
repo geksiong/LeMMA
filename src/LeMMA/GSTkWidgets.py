@@ -25,18 +25,18 @@ Gek S. Low <geksiong@yahoo.com>
 
 """
 
-from Tkinter import *
+from tkinter import *
 #from Tix import *
-from Tkconstants import *
+from tkinter.constants import *
 
-import tkFont
-import tkSimpleDialog
-import tkMessageBox
-import tkFileDialog
+import tkinter.font
+import tkinter.simpledialog
+import tkinter.messagebox
+import tkinter.filedialog
 
 # Used by SimpleTkHtml "widget"
-from HTMLParser import HTMLParser
-from Tkinter import *
+from html.parser import HTMLParser
+from tkinter import *
 import re
 import os
 
@@ -45,7 +45,7 @@ import binascii
 import base64
 
 def blah():
-	tkMessageBox.showinfo("Under construction", "This feature is not yet implemented")
+	tkinter.messagebox.showinfo("Under construction", "This feature is not yet implemented")
 
 # Location of the icon images folder
 icondir = os.path.abspath(os.path.dirname(__file__)+"/images")
@@ -63,10 +63,10 @@ class AutoScrollbar(Scrollbar):
 		Scrollbar.set(self, lo, hi)
 
 	def pack(self, **kw):
-		raise TclError, "cannot use pack with this widget"
+		raise TclError("cannot use pack with this widget")
 
 	def place(self, **kw):
-		raise TclError, "cannot use place with this widget"
+		raise TclError("cannot use place with this widget")
 
 # IconSet - manages a collection of icons. It dynamically loads the icons only when needed into memory.
 # If iconid is invalid, it will try to load it as a filename
@@ -106,11 +106,11 @@ jBs6dvgAMqTIkSRLmjiJJAuWyW8mUqRQoaKFCxcwYsSgUaMGDhzUIJ2kRENWo5+NDgkdSrRoIAA7
 
 	def getIcon(self, iconid):
 		# is it in the iconmap?
-		if self.iconmap.has_key(iconid):
+		if iconid in self.iconmap:
 			return self.iconmap[iconid]
 		else:
 			# not loaded yet, check that it is in the defined list
-			if self.iconlist.has_key(iconid):
+			if iconid in self.iconlist:
 				# get the icon from file and add it to the iconmap
 				try:
 					self.iconmap[iconid] = PhotoImage(file=os.path.abspath(self.icondir+"/"+self.iconlist[iconid]))
@@ -522,7 +522,7 @@ class ComboMenu(Button):
 # The middle button (button 2) will not be displayed if text2=="", regardless of whether a command is set for it
 # default=<button number>, 0 means no default button set
 
-class SimpleDialogExt(tkSimpleDialog.Dialog):
+class SimpleDialogExt(tkinter.simpledialog.Dialog):
 	def __init__(self, parent, title=None, text1="OK", text2="", text3="Cancel", command1=None, command2=None, command3=None, default=1, bind_ret=1, bind_esc=3):
 		self.default_btn = default
 		self.bind_ret = bind_ret
@@ -546,7 +546,7 @@ class SimpleDialogExt(tkSimpleDialog.Dialog):
 		else:
 			self.btncmd[2] = self.cancel
 
-		tkSimpleDialog.Dialog.__init__(self, parent, title)
+		tkinter.simpledialog.Dialog.__init__(self, parent, title)
 
 	# customisable buttonbox
 	def buttonbox(self):
@@ -616,7 +616,7 @@ class SimpleTkHtml(HTMLParser):
 		self.prev_was_newline = None
 		self.is_in_pre = False	# for <pre> tag
 
-		for s in self.STYLES.keys():
+		for s in list(self.STYLES.keys()):
 			#print s, self.STYLES[s]
 			self.text.tag_config(s, self.STYLES[s])
 
@@ -631,7 +631,7 @@ class SimpleTkHtml(HTMLParser):
 			contents = f.read()
 			f.close()
 		except:
-			print "Can't open "+filename
+			print("Can't open "+filename)
 			return
 
 		HTMLParser.feed(self, contents)
@@ -779,7 +779,7 @@ class SimpleTkHtml(HTMLParser):
 	def dump(self):
 		# Debug function - dump contents of text widget
 		for i in self.text.dump("0.0", END):
-			print i[2]+": ["+i[0]+"] "+i[1]
+			print(i[2]+": ["+i[0]+"] "+i[1])
 
 	def getTagAndStyle(self):
 		# Create unique tag and style based on current nested tags
@@ -881,7 +881,7 @@ class SelectFontDialog(SimpleDialogExt):
 		self.fontEntry.insert(INSERT, self.font)
 		self.fontEntry.grid(row=0, column=0, sticky=E+W)
 		self.fontComboMenu = ComboMenu(master, attachto=self.fontEntry, text=">")
-		self.fontComboMenu.setList(sorted(tkFont.families()))
+		self.fontComboMenu.setList(sorted(tkinter.font.families()))
 		self.fontComboMenu.grid(row=0, column=1, sticky=W)
 
 		self.sizeEntry = Entry(master, width=3, textvariable=self.sizeVar)
@@ -889,7 +889,7 @@ class SelectFontDialog(SimpleDialogExt):
 		self.sizeEntry.insert(INSERT, self.size)
 		self.sizeEntry.grid(row=0, column=2, sticky=W)
 		self.sizeComboMenu = ComboMenu(master, attachto=self.sizeEntry, text=">")
-		self.sizeComboMenu.setList(map(str, range(8,73)))
+		self.sizeComboMenu.setList(list(map(str, list(range(8,73)))))
 		self.sizeComboMenu.grid(row=0, column=3, sticky=W)
 
 		global icondir
@@ -929,7 +929,7 @@ class SelectFontDialog(SimpleDialogExt):
 	def setPreview(self, *dummy):
 		self.font = self.fontVar.get()
 		#print self.font
-		if not self.font in tkFont.families():
+		if not self.font in tkinter.font.families():
 			self.font = "Helvetica"
 		self.size = self.sizeVar.get()
 		if self.size == "":

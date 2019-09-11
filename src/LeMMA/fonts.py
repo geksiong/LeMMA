@@ -25,18 +25,18 @@ Gek S. Low <geksiong@yahoo.com>
 
 """
 
-from GSTkWidgets import *
-import Tix
-import settings
-import common
-from constants import *
+from .GSTkWidgets import *
+import tkinter.tix
+from . import settings
+from . import common
+from .constants import *
 
-import ConfigParser
+import configparser
 import logging
 
 def readFonts():
 	# read config file and override default fonts in constants.py
-	config = ConfigParser.ConfigParser()
+	config = configparser.ConfigParser()
 	config.read(common.settingsFile)
 	for i in range(7):
 		confkey = "font." + FONTKEYS[i]
@@ -88,11 +88,11 @@ class ConfigureGUI(SimpleDialogExt):
 		FONTS["Code None"] = (FONTS["Code"][0], FONTS["Code"][1], "normal")
 
 		# save to settings.dat
-		config = ConfigParser.ConfigParser()
+		config = configparser.ConfigParser()
 		config.read(common.settingsFile)
 		if not config.has_section("gui"):
 			config.add_section("gui")
-		for key in FONTS.keys():
+		for key in list(FONTS.keys()):
 			config.set("gui", "font." + key, FONTS[key][0] + "," + FONTS[key][1] + "," + FONTS[key][2])
 		f = open(common.settingsFile, 'w')
 		config.write(f)

@@ -25,7 +25,7 @@ Gek S. Low <geksiong@yahoo.com>
 
 """
 
-from GSTkWidgets import *
+from .GSTkWidgets import *
 import re
 import logging
 
@@ -175,7 +175,7 @@ def transposeNote(note, currentKey, newKey, dbl_acc=True):
 		else:
 			newNote = newActualNote
 	elif adjust != 0:
-		print 'unexpected adjust value: ' , adjust
+		print('unexpected adjust value: ' , adjust)
 	#print newNote
 	return newNote
 

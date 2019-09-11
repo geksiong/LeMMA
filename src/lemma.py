@@ -43,17 +43,17 @@ from LeMMA.app import *
 from LeMMA.settings import *
 
 def printHelp():
-	print title
-	print version
-	print copyright1
-	print """
+	print(title)
+	print(version)
+	print(copyright1)
+	print("""
 Usage: lemma(.py) [options] [MMA file]
 
 Command-line options:
 	--help		This help message
 	--debug		Turns on debug mode (run this from a shell window)
 	--config=dir	Use "dir" for configuration settings
-	"""
+	""")
 
 def main():
 	loglevel = logging.ERROR
@@ -62,10 +62,10 @@ def main():
 	# Look for any command-line options
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], "h", ["debug", "config=", "help"])
-	except getopt.GetoptError, err:
+	except getopt.GetoptError as err:
 		# print help information and exit:
-		print str(err)
-		print
+		print(str(err))
+		print()
 	for o, a in opts:
 		if o in ("--debug"):
 			loglevel = logging.DEBUG
