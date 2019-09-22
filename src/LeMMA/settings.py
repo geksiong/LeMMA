@@ -26,20 +26,20 @@ Gek S. Low <geksiong@yahoo.com>
 """
 
 # Settings
-from GSTkWidgets import *
+from .GSTkWidgets import *
 import os
 import re
 import subprocess
-import cPickle
-import commands
+import pickle
+import subprocess
 import platform
-import ConfigParser
+import configparser
 
-from constants import *
+from .constants import *
 
 import logging
-import fonts
-import common
+from . import fonts
+from . import common
 
 # Global variables
 groovedict = {}
@@ -51,7 +51,7 @@ def readGrooves():
 	global groovelib_lookup
 	try:
 		f = open(common.groovesFile, "r")
-		p = cPickle.Unpickler(f)
+		p = pickle.Unpickler(f)
 		groovedict = p.load()
 		groovelib_lookup = p.load()
 		f.close()
@@ -213,7 +213,7 @@ class SettingsDialog(SimpleDialogExt):
 
 		# save the settings into settings file
 
-		config = ConfigParser.ConfigParser()
+		config = configparser.ConfigParser()
 		config.read(common.settingsFile)
 		if not config.has_section("paths"):
 			config.add_section("paths")
@@ -282,7 +282,7 @@ class SettingsDialog(SimpleDialogExt):
 		#print groovedict
 		#write groovedict to grooves file
 		f = open(common.groovesFile, "w")
-		p = cPickle.Pickler(f)
+		p = pickle.Pickler(f)
 		p.dump(groovedict)
 		p.dump(groovelib_lookup)
 		f.close()
@@ -375,10 +375,10 @@ class SettingsDialog(SimpleDialogExt):
 
 					# Rename the groovelibrary if clashes found (the mambo grooves). This is no conflict as long as the grooves themselves don't clash. If so, it will depend on MMA's resolution rules.
 					# Unfortunately, it happens that the yamaha grooves conflict with each other...
-					if groovelibrary in groovedict.keys():
+					if groovelibrary in list(groovedict.keys()):
 						new_groovelibname = groovelibname
 						libname_suffix = 1
-						while (new_groovelibname + "|" + keylibDir) in groovedict.keys():
+						while (new_groovelibname + "|" + keylibDir) in list(groovedict.keys()):
 							new_groovelibname = groovelibname + "_" + str(libname_suffix)
 						groovelibrary = new_groovelibname + "|" + keylibDir
 						logging.debug("[addGrooves] " + groovelibname + " renamed to " + new_groovelibname)
@@ -453,13 +453,13 @@ class GroovesDialog(SimpleDialogExt):
 		logging.debug("[GroovesDialog] Current groove in measure is: " + self.currentgroove + " at " + currentgroovelib)
 		
 		# If there are grooves, proceed
-		keylist = groovedict.keys()
+		keylist = list(groovedict.keys())
 
 		keylist.sort()
 		if currentgroovelib == "":
 			currentgroovelib = keylist[0]
 		else:
-			if currentgroovelib not in groovedict.keys():
+			if currentgroovelib not in list(groovedict.keys()):
 				logging.debug("[GroovesDialog] Current groove " + self.currentgroove + " at " + currentgroovelib + " is not found.")
 				self.label = Label(master, text="Groove not found in grooves dictionary")
 				self.label.grid(row=0, column=0, sticky=N+S+E+W)

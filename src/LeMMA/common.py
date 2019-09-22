@@ -26,19 +26,19 @@ Gek S. Low <geksiong@yahoo.com>
 """
 
 # Common
-from GSTkWidgets import *
+from .GSTkWidgets import *
 import os
 import re
 import subprocess
-import cPickle
-import commands
+import pickle
+import subprocess
 import platform
-import ConfigParser
+import configparser
 
-from constants import *
-import constants
+from .constants import *
+from . import constants
 import logging
-import fonts
+from . import fonts
 
 try:
 	import pygame
@@ -66,6 +66,7 @@ settingsFile = ""
 libDir = ""
 
 playerIsPaused = True
+childProcess = None
 
 outputWindow = Text()
 
@@ -178,7 +179,7 @@ def readSettings():
 	
 	# load settings (if file exists)
 	try:
-		config = ConfigParser.ConfigParser()
+		config = configparser.ConfigParser()
 		config.read(settingsFile)
 
 		pythonPath = config.get("paths", "python")
@@ -231,7 +232,8 @@ def playMMA():
 	#	quote pythonPath to handle correctly space characters in it
 	cmd = os.path.normcase("\"" + pythonPath + "\" " + mmaPath + " \"" + currentdir + "/_temp_.mma\"")
 	logging.debug("[playMMA] Calling process '" + cmd + "'")
-	pipe = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE).stdout
+	childProcess = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+	pipe = childProcess.stdout
 	output = pipe.read()
 	status = pipe.close()
 
@@ -272,7 +274,9 @@ def playMMA_external(filename):
 	midiopts = midiPlayer.replace(realmidipath, "")	# get any command-line options in midiPlayer
 	cmd = os.path.normcase("\"" + realmidipath + "\" " + midiopts + " \"" + filename + "\"")
 	logging.debug("[playMMA] Calling process '" + cmd + "'")
-	pipe = subprocess.Popen(cmd, shell=useShell, stdout=None).stdout
+	childProcess = subprocess.Popen(cmd, shell=useShell, stdout=None, preexec_fn=os.setsid)
+	pipe = childProcess.stdout
+	logging.debug("[playMMA]: process is {0}, useShell is {1}".format( childProcess.pid, useShell))
 
 
 def playMMA_pygame(filename):
