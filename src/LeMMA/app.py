@@ -240,7 +240,7 @@ class Application(Frame):
 						self.grooves_lib[index] = settings.groovelib_lookup[key.lower()]
 						settings.currentgroovelib = self.grooves_lib[index] + "|" + self.grooves_libpath[index]
 					else:
-						tkMessageBox.showwarning("Warning", "Groove "+self.grooves[index]["text"]+" is not found in LeMMA groove database")
+						tkinter.messagebox.showwarning("Warning", "Groove "+self.grooves[index]["text"]+" is not found in LeMMA groove database")
 						print(self.grooves_lib[index])
 						settings.currentgroovelib = ""
 
@@ -353,7 +353,7 @@ class Application(Frame):
 
 
 	def newFile(self, event=None):
-		if tkMessageBox.askokcancel("Warning", "All contents will be lost! Continue?"):
+		if tkinter.messagebox.askokcancel("Warning", "All contents will be lost! Continue?"):
 			self.currentFile = ""
 			self.clearCanvas()
 			self.updateTitle()
@@ -383,7 +383,7 @@ class Application(Frame):
 
 		global MMA_filetypes
 		if filename == "":
-			temp = tkFileDialog.askopenfilename(filetypes = MMA_filetypes)
+			temp = tkinter.filedialog.askopenfilename(filetypes = MMA_filetypes)
 		else:
 			temp = filename
 
@@ -479,7 +479,7 @@ class Application(Frame):
 				if key.lower() in list(settings.groovelib_lookup.keys()):
 					self.grooves_lib[measure] = settings.groovelib_lookup[key.lower()]
 				else:
-					tkMessageBox.showwarning("Warning", "Groove '"+line+"' is not found in LeMMA groove database. You may want to refresh it under 'Settings'.")
+					tkinter.messagebox.showwarning("Warning", "Groove '"+line+"' is not found in LeMMA groove database. You may want to refresh it under 'Settings'.")
 				continue
 
 			if clearcontents == 1:
@@ -578,7 +578,7 @@ class Application(Frame):
 	def saveAsMMA(self, event=None):
 		self.askAndSaveMMA()
 	def askAndSaveMMA(self):
-		temp = tkFileDialog.asksaveasfilename(filetypes = MMA_filetypes)
+		temp = tkinter.filedialog.asksaveasfilename(filetypes = MMA_filetypes)
 		if temp != "" and temp != ():
 			self.currentFile = temp
 			self.updateTitle()

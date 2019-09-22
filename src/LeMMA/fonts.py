@@ -100,6 +100,6 @@ class ConfigureGUI(SimpleDialogExt):
 
 		common.printOutput("Font settings saved to " + common.settingsFile)
 		# Show info for now. Next time can reconfigure all fonts live.
-		tkMessageBox.showinfo("Please restart LeMMA", "The new font settings will only fully take effect when you restart LeMMA")
+		tkinter.messagebox.showinfo("Please restart LeMMA", "The new font settings will only fully take effect when you restart LeMMA")
 		return
 

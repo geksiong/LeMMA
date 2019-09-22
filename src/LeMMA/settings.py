@@ -127,7 +127,7 @@ class SettingsDialog(SimpleDialogExt):
 		return self.mmaPathEntry	# initial focus
 	
 	def autoDetectPaths(self):
-		if tkMessageBox.askokcancel("Warning", "Your current settings will be overwritten. Continue?"):
+		if tkinter.messagebox.askokcancel("Warning", "Your current settings will be overwritten. Continue?"):
 			common.autoDetectPaths()
 			self.pythonPathEntry.delete(0, END)
 			self.pythonPathEntry.insert(1, common.pythonPath)
@@ -140,35 +140,35 @@ class SettingsDialog(SimpleDialogExt):
 	
 
 	def mmaPathBrowse(self):
-		currentFile = tkFileDialog.askopenfilename(parent=self)
+		currentFile = tkinter.filedialog.askopenfilename(parent=self)
 		if currentFile != "" and currentFile != ():
 			currentFile = os.path.normpath(currentFile)
 			self.mmaPathEntry.delete(0, END)
 			self.mmaPathEntry.insert(1, currentFile)
 
 	def mmaLibDirBrowse(self):
-		currentFile = tkFileDialog.askdirectory(parent=self)
+		currentFile = tkinter.filedialog.askdirectory(parent=self)
 		if currentFile != "" and currentFile != ():
 			currentFile = os.path.dirname(os.path.normpath(currentFile)+"/") # dir name
 			self.mmaLibDirEntry.delete(0, END)
 			self.mmaLibDirEntry.insert(1, currentFile)
 
 	def pythonPathBrowse(self):
-		currentFile = tkFileDialog.askopenfilename(parent=self)
+		currentFile = tkinter.filedialog.askopenfilename(parent=self)
 		if currentFile != "" and currentFile != ():
 			currentFile = os.path.normpath(currentFile)
 			self.pythonPathEntry.delete(0, END)
 			self.pythonPathEntry.insert(1, currentFile)
 	
 	def midiPlayerBrowse(self):
-		currentFile = tkFileDialog.askopenfilename(parent=self)
+		currentFile = tkinter.filedialog.askopenfilename(parent=self)
 		if currentFile != "" and currentFile != ():
 			currentFile = os.path.normpath(currentFile)
 			self.midiPlayerEntry.delete(0, END)
 			self.midiPlayerEntry.insert(1, currentFile)
 
 	def customGrooveBrowse(self):
-		currentFile = tkFileDialog.askdirectory(parent=self)
+		currentFile = tkinter.filedialog.askdirectory(parent=self)
 		if currentFile != "" and currentFile != ():
 			currentFile = os.path.dirname(os.path.normpath(currentFile)+"/") # dir name
 			self.customGroovePathEntry.delete(0, END)
@@ -187,29 +187,29 @@ class SettingsDialog(SimpleDialogExt):
 		logging.debug("[Settings] Settings are: (" + pythonPath + "," + mmaPath + "," + midiPlayer + "," + customGroovePath + ")")
 		# validate the existence of these paths
 		if not os.path.exists(pythonPath):
-			tkMessageBox.showerror("Error", "Python path: '" + pythonPath + "' does not exist.")
+			tkinter.messagebox.showerror("Error", "Python path: '" + pythonPath + "' does not exist.")
 			return
 		if not os.path.exists(mmaPath):
-			tkMessageBox.showerror("Error", "MMA path: '" + mmaPath + "' does not exist.")
+			tkinter.messagebox.showerror("Error", "MMA path: '" + mmaPath + "' does not exist.")
 		if os.path.isdir(pythonPath):
-			tkMessageBox.showerror("Error", "Python path: '" + pythonPath + "' is a directory and not a filename.")
+			tkinter.messagebox.showerror("Error", "Python path: '" + pythonPath + "' is a directory and not a filename.")
 			return
 		if os.path.isdir(mmaPath):
-			tkMessageBox.showerror("Error", "MMA path: '" + mmaPath + "' is a directory and not a filename.")
+			tkinter.messagebox.showerror("Error", "MMA path: '" + mmaPath + "' is a directory and not a filename.")
 			return
 
 		if not os.path.exists(libDir):
-			tkMessageBox.showerror("Error", "MMA grooves path: '" + libDir + "' does not exist.")
+			tkinter.messagebox.showerror("Error", "MMA grooves path: '" + libDir + "' does not exist.")
 			return
 
 		realmidipath = re.compile(r'\s-[^\s]*').sub("", midiPlayer)	# strip any command-line options
 		if not os.path.exists(realmidipath):
-			tkMessageBox.showwarning("Warning", "Midi player path: '" + midiPlayer + "' does not exist. You won't be able to play MMA files.")
+			tkinter.messagebox.showwarning("Warning", "Midi player path: '" + midiPlayer + "' does not exist. You won't be able to play MMA files.")
 		if os.path.isdir(realmidipath):
-			tkMessageBox.showwarning("Warning", "Midi player path: '" + midiPlayer + "' is a directory and not a filename. You won't be able to play the MMA file.")
+			tkinter.messagebox.showwarning("Warning", "Midi player path: '" + midiPlayer + "' is a directory and not a filename. You won't be able to play the MMA file.")
 
 		if customGroovePath != "" and not os.path.exists(customGroovePath):
-			tkMessageBox.showwarning("Warning", "Custom groove path: '" + customGroovePath + "' does not exist.")
+			tkinter.messagebox.showwarning("Warning", "Custom groove path: '" + customGroovePath + "' does not exist.")
 
 		# save the settings into settings file
 
@@ -248,20 +248,20 @@ class SettingsDialog(SimpleDialogExt):
 
 		# validate paths
 		if not os.path.exists(pythonPath):
-			tkMessageBox.showerror("Error", "Python path: '" + pythonPath + "' does not exist. Please check your settings.")
+			tkinter.messagebox.showerror("Error", "Python path: '" + pythonPath + "' does not exist. Please check your settings.")
 			return
 		if not os.path.exists(mmaPath):
-			tkMessageBox.showerror("Error", "MMA path: '" + mmaPath + "' does not exist. Please check your settings.")
+			tkinter.messagebox.showerror("Error", "MMA path: '" + mmaPath + "' does not exist. Please check your settings.")
 			return
 		if os.path.isdir(pythonPath):
-			tkMessageBox.showerror("Error", "Python path: '" + pythonPath + "' is a directory and not a filename. Please check your settings.")
+			tkinter.messagebox.showerror("Error", "Python path: '" + pythonPath + "' is a directory and not a filename. Please check your settings.")
 			return
 		if os.path.isdir(mmaPath):
-			tkMessageBox.showerror("Error", "MMA path: '" + mmaPath + "' is a directory and not a filename. Please check your settings.")
+			tkinter.messagebox.showerror("Error", "MMA path: '" + mmaPath + "' is a directory and not a filename. Please check your settings.")
 			return
 
 		if customGroovePath != "" and not os.path.exists(customGroovePath):
-			tkMessageBox.showwarning("Warning", "Custom groove path: '" + customGroovePath + "' does not exist. These will not be added.")
+			tkinter.messagebox.showwarning("Warning", "Custom groove path: '" + customGroovePath + "' does not exist. These will not be added.")
 
 		mmaDir = os.path.dirname(mmaPath)
 		#mmaDir = re.compile(r'.*[\\/]').match(mmaPath).group()

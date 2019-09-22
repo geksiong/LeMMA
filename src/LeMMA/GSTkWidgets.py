@@ -516,8 +516,8 @@ class ComboMenu(Button):
 		self.root.destroy()
 		Button.destroy(self)
 
-# SimpleDialogExt - an extended version of tkSimpleDialog.Dialog
-# Behaves like tkSimpleDialog.Dialog if extended params are not used
+# SimpleDialogExt - an extended version of tkinter.simpledialog.Dialog
+# Behaves like tkinter.simpledialog.Dialog if extended params are not used
 # 3 customisable buttons - text and actions, active button can be customised
 # The middle button (button 2) will not be displayed if text2=="", regardless of whether a command is set for it
 # default=<button number>, 0 means no default button set

@@ -210,7 +210,7 @@ class TransposeDialog(SimpleDialogExt):
 		if not invalidKey:
 			SimpleDialogExt.__init__(self, master, title="Transpose song")
 		else:
-			tkMessageBox.showinfo("Invalid Key Signature", "Please use a valid key signature")
+			tkinter.messagebox.showinfo("Invalid Key Signature", "Please use a valid key signature")
 
 	def body(self, master):
 		Label(master=master, text="Select a key signature").grid(row=0, column=0, sticky=NW)

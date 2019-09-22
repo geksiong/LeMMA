@@ -205,13 +205,13 @@ def playMMA():
 
 	# validate the paths first
 	if not os.path.exists(mmaPath):
-		tkMessageBox.showerror("Error", "MMA Path: '" + mmaPath + "' does not exist. Please check your settings.")
+		tkinter.messagebox.showerror("Error", "MMA Path: '" + mmaPath + "' does not exist. Please check your settings.")
 		return
 	if os.path.isdir(pythonPath):
-		tkMessageBox.showerror("Error", "Python path: '" + pythonPath + "' is a directory and not a filename. Please check your settings.")
+		tkinter.messagebox.showerror("Error", "Python path: '" + pythonPath + "' is a directory and not a filename. Please check your settings.")
 		return
 	if os.path.isdir(mmaPath):
-		tkMessageBox.showerror("Error", "MMA path: '" + mmaPath + "' is a directory and not a filename. Please check your settings.")
+		tkinter.messagebox.showerror("Error", "MMA path: '" + mmaPath + "' is a directory and not a filename. Please check your settings.")
 		return
 
 
@@ -244,7 +244,7 @@ def playMMA():
 
 	# Check temp midi file exists, return if not found
 	if not os.path.exists(tempmidifile):
-		tkMessageBox.showerror("Error", "Failed to generate midi from MMA.")
+		tkinter.messagebox.showerror("Error", "Failed to generate midi from MMA.")
 		logging.debug("[playMMA] Temp midi not created. Nothing to play.")
 		return
 
@@ -259,7 +259,7 @@ def playMMA_external(filename):
 
 	realmidipath = re.compile(r'\s-[^\s]*').sub("", midiPlayer)	# strip any command-line options
 	if not os.path.exists(realmidipath):
-		tkMessageBox.showerror("Error", "Midi player: '" + midiPlayer + "' does not exist. Please check your settings.")
+		tkinter.messagebox.showerror("Error", "Midi player: '" + midiPlayer + "' does not exist. Please check your settings.")
 		#return		# non-fatal error in case of bugs
 
 	# play Midi
@@ -284,7 +284,7 @@ def playMMA_pygame(filename):
 	global playerIsPaused
 
 	if not hasPyGame:
-		tkMessageBox.showerror("Error", "PyGame not found! Please use another midi engine.")
+		tkinter.messagebox.showerror("Error", "PyGame not found! Please use another midi engine.")
 	else:
 		if playerIsPaused:
 			pygame.mixer.music.unpause()
@@ -300,12 +300,12 @@ def stop_playMMA():
 
 	if midiEngine == "PyGame":
 		if not hasPyGame:
-			tkMessageBox.showerror("Error", "PyGame not found! Please use another midi engine.")
+			tkinter.messagebox.showerror("Error", "PyGame not found! Please use another midi engine.")
 		else:
 			pygame.mixer.music.stop()
 			playerIsPaused = False
 	else:
-		tkMessageBox.showinfo("Not available", "Stop playback is available only for PyGame midi engine.")
+		tkinter.messagebox.showinfo("Not available", "Stop playback is available only for PyGame midi engine.")
 
 def pause_playMMA():
 	global hasPyGame
@@ -313,14 +313,14 @@ def pause_playMMA():
 
 	if midiEngine == "PyGame":
 		if not hasPyGame:
-			tkMessageBox.showerror("Error", "PyGame not found! Please use another midi engine.")
+			tkinter.messagebox.showerror("Error", "PyGame not found! Please use another midi engine.")
 		else:
 			# only need to pause if still playing music
 			if pygame.mixer.music.get_busy():
 				pygame.mixer.music.pause()
 				playerIsPaused = True
 	else:
-		tkMessageBox.showinfo("Not available", "Pause playback is available only for PyGame midi engine.")
+		tkinter.messagebox.showinfo("Not available", "Pause playback is available only for PyGame midi engine.")
 
 class ViewFileDialog(SimpleDialogExt):
 	contents = ""
